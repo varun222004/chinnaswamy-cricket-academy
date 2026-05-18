@@ -1,0 +1,115 @@
+{
+  "theme": "dark",
+  "archetype": "2_performance_pro",
+  "brand": {
+    "name": "Chinnaswamy Academy Marsur",
+    "vibe": "Premium, authoritative, high-energy, modern sports club, performance-focused"
+  },
+  "colors": {
+    "background": "#0B0B0B",
+    "surface": "#141414",
+    "surface_hover": "#1A1A1A",
+    "border": "#2A2A2A",
+    "primary": "#C7F041",
+    "primary_hover": "#A5C635",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#D1D1D1",
+    "text_inverse": "#000000",
+    "error": "#FF3B30",
+    "success": "#C7F041"
+  },
+  "typography": {
+    "font_families": {
+      "heading": "Bebas Neue, sans-serif",
+      "body": "Poppins, sans-serif"
+    },
+    "scale": {
+      "h1": "text-6xl md:text-8xl font-bebas uppercase tracking-wider leading-none",
+      "h2": "text-4xl md:text-6xl font-bebas uppercase tracking-wide leading-tight",
+      "h3": "text-2xl md:text-3xl font-bebas uppercase tracking-wide",
+      "h4": "text-xl font-poppins font-semibold text-white",
+      "body": "text-base font-poppins leading-relaxed text-[#D1D1D1]",
+      "small": "text-sm font-poppins text-[#A0A0A0]",
+      "label": "text-xs font-bebas tracking-[0.2em] uppercase text-[#C7F041]"
+    }
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-24 md:py-32",
+    "grid_gap": "gap-6 md:gap-8",
+    "card_padding": "p-8 md:p-10",
+    "border_radius": "rounded-sm"
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-[#C7F041] text-black font-bebas text-xl px-8 py-4 uppercase tracking-wider hover:bg-[#A5C635] transition-colors duration-300 flex items-center justify-center rounded-sm",
+      "secondary": "bg-transparent border border-[#333333] text-white font-bebas text-xl px-8 py-4 uppercase tracking-wider hover:border-[#C7F041] hover:text-[#C7F041] transition-all duration-300 rounded-sm",
+      "ghost": "bg-transparent text-[#D1D1D1] hover:text-[#C7F041] transition-colors duration-200 font-bebas text-lg uppercase tracking-wider"
+    },
+    "cards": {
+      "default": "bg-[#141414] border border-[#2A2A2A] p-8 rounded-sm hover:border-[#C7F041]/30 transition-all duration-300",
+      "interactive": "bg-[#141414] border border-[#2A2A2A] p-8 rounded-sm hover:-translate-y-2 hover:border-[#C7F041] hover:shadow-[0_8px_30px_rgba(199,240,65,0.1)] transition-all duration-300 cursor-pointer"
+    },
+    "navbar": "fixed top-0 w-full z-50 bg-[#0B0B0B]/90 backdrop-blur-xl border-b border-[#2A2A2A]",
+    "inputs": "bg-[#0B0B0B] border border-[#2A2A2A] text-white p-4 font-poppins rounded-sm focus:border-[#C7F041] focus:ring-1 focus:ring-[#C7F041] outline-none w-full transition-all"
+  },
+  "imagery": {
+    "style": "High contrast, dark cinematic sports aesthetics, realistic turf and nets. Avoid cartoonish or flat vectors. Use heavy bottom/top gradients on hero overlays to ensure text readability.",
+    "overlay": "bg-gradient-to-t from-[#0B0B0B] via-[#0B0B0B]/60 to-transparent",
+    "urls": {
+      "hero_bg": "https://images.unsplash.com/photo-1729027696167-0f3aa8e92e64?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxjcmlja2V0JTIwcHJhY3RpY2UlMjBuZXRzfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85",
+      "ground_1": "https://images.unsplash.com/photo-1746053301234-f7f95dc669e0?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwzfHxjcmlja2V0JTIwcHJhY3RpY2UlMjBuZXRzfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85",
+      "ground_2": "https://images.unsplash.com/photo-1771909712504-900d75c7eccb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwyfHxjcmlja2V0JTIwcGl0Y2glMjBncm91bmR8ZW58MHx8fHwxNzc5MDkxMjczfDA&ixlib=rb-4.1.0&q=85",
+      "coaching": "https://images.unsplash.com/photo-1595210382051-4d2c31fcc2f4?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHw0fHxjcmlja2V0JTIwYmF0dGluZyUyMGNvYWNoaW5nfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85",
+      "nets_practice": "https://images.unsplash.com/photo-1587716856188-ef47793f3fb7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHw0fHxjcmlja2V0JTIwcHJhY3RpY2UlMjBuZXRzfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85",
+      "training": "https://images.unsplash.com/photo-1593341646782-e0b495cff86d?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODF8MHwxfHNlYXJjaHwxfHxjcmlja2V0JTIwdHJhaW5pbmclMjBmaXRuZXNzfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85",
+      "gallery": [
+         "https://images.unsplash.com/photo-1771909712577-6101900100fa?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHw0fHxjcmlja2V0JTIwcGl0Y2glMjBncm91bmR8ZW58MHx8fHwxNzc5MDkxMjczfDA&ixlib=rb-4.1.0&q=85",
+         "https://images.unsplash.com/photo-1771909713927-1035f4cabb7e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwzfHxjcmlja2V0JTIwcGl0Y2glMjBncm91bmR8ZW58MHx8fHwxNzc5MDkxMjczfDA&ixlib=rb-4.1.0&q=85",
+         "https://images.unsplash.com/photo-1599982946086-eb42d9e14eb8?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwzfHxjcmlja2V0JTIwYmF0dGluZyUyMGNvYWNoaW5nfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85",
+         "https://images.unsplash.com/photo-1595210382266-2d0077c1f541?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NTYxODd8MHwxfHNlYXJjaHwyfHxjcmlja2V0JTIwYmF0dGluZyUyMGNvYWNoaW5nfGVufDB8fHx8MTc3OTA5MTI3MHww&ixlib=rb-4.1.0&q=85"
+      ]
+    }
+  },
+  "sections": {
+    "hero": {
+      "layout": "100vh min-height, content horizontally centered. Image positioned absolute with overlay.",
+      "content": "Heading: 'Train. Practice. Dominate.' Subtitle: 'Premium Cricket Coaching & Ground Booking.' CTAs: 'Book Ground', 'Join Academy'."
+    },
+    "about_and_stats": {
+      "layout": "Asymmetric bento grid. Left side: Text/Story. Right side: 4 Stat/Feature blocks (2 Grounds, Pro Coaching, Astro Turf, Indoor & Outdoor). Use high contrast typography for numbers."
+    },
+    "facilities": {
+      "layout": "Dense functional grid (grid-cols-2 sm:grid-cols-3 md:grid-cols-5). Minimalist icon + text approach, dark cards.",
+      "items": ["Washroom", "Dugout", "Astro Turf Pitch", "Drinking Water", "Parking", "Ball Availability", "Umpire", "Bowling Machine", "Open Nets", "1-on-1 Coaching"]
+    },
+    "grounds": {
+      "layout": "2 large vertical cards (md:col-span-1 each). Image on top, dense details below. Chinnaswamy Ground Marsur 1 & 2. Include embedded 'Book Now' CTA."
+    },
+    "booking_system": {
+      "flow": "Select ground -> Select date -> Display slot cards -> Modal form for booking.",
+      "pricing_rules": "6:30 AM-10:00 AM (₹4000), 10:00 AM-1:00 PM (₹3500), 1:00 PM-6:00 PM (₹3000)."
+    },
+    "programs_and_pricing": {
+      "layout": "3-column pricing tier card layout. Tiers: Nets (₹250/hr), Coaching (₹3000/mo), 1-on-1 (₹12000)."
+    },
+    "admin_dashboard": {
+      "layout": "Sidebar navigation (left) + Data-dense tables using Shadcn UI (right). Dark mode optimized.",
+      "modules": ["Overview", "Bookings", "Admissions", "Attendance", "Blog Mgmt"]
+    }
+  },
+  "icons": {
+    "library": "lucide-react",
+    "style": "stroke-width 1.5, color #C7F041 for primary actions, #FFFFFF for general UI."
+  },
+  "instructions_to_main_agent": [
+    "You MUST use standard HTML/Tailwind for marketing layout elements to ensure freedom of design. Use pure flex/grid instead of generic containers.",
+    "Use Shadcn UI components for complex interactive pieces: Dialogs, Selects, Forms, and the Admin Dashboard tables.",
+    "The color #C7F041 (Lime Green) is extremely aggressive. Use it ONLY for CTAs, active states, and small accents (like icons or thin borders). Never use it as a large background area.",
+    "All Headings (H1, H2, H3) MUST use the Bebas Neue font. Use Poppins for body text.",
+    "Add 'data-testid' to ALL interactive elements (buttons, inputs, cards that open modals, etc.) for testing.",
+    "Add `font-bebas` class for titles and `font-poppins` class for normal text.",
+    "Do NOT use placeholder text or placeholder images. ONLY use the Unsplash URLs provided in this file.",
+    "The overall tone is a crossover between a premium golf club and Manchester United Foundation - it should feel established, professional, and slightly intimidating/elite."
+  ]
+}
