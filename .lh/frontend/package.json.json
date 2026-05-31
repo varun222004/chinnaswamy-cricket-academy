@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 2,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1780238809679,
@@ -16,6 +16,18 @@
                 {
                     "date": 1780238966091,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,10 +76,9 @@\n     \"@craco/craco\": \"^7.1.0\",\r\n     \"@emergentbase/visual-edits\": \"https://assets.emergent.sh/npm/emergentbase-visual-edits-1.0.8.tgz\",\r\n     \"@eslint/js\": \"9.23.0\",\r\n     \"autoprefixer\": \"^10.4.20\",\r\n-    \"eslint\": \"9.23.0\",\r\n-    \"eslint-plugin-import\": \"2.31.0\",\r\n+\"eslint\": \"^8.57.0\",    \"eslint-plugin-import\": \"2.31.0\",\r\n     \"eslint-plugin-jsx-a11y\": \"6.10.2\",\r\n     \"eslint-plugin-react\": \"7.37.4\",\r\n     \"eslint-plugin-react-hooks\": \"5.2.0\",\r\n     \"globals\": \"15.15.0\",\r\n"
+                },
+                {
+                    "date": 1780241140463,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,10 +41,12 @@\n     \"embla-carousel-react\": \"^8.6.0\",\r\n     \"input-otp\": \"^1.4.2\",\r\n     \"lucide-react\": \"^0.507.0\",\r\n     \"next-themes\": \"^0.4.6\",\r\n-\"react\": \"^18.3.1\",    \"react-day-picker\": \"8.10.1\",\r\n-\"react-dom\": \"^18.3.1\",    \"react-hook-form\": \"^7.56.2\",\r\n+\"react\": \"^18.3.1\",\r\n+\"react-day-picker\": \"8.10.1\",\r\n+\"react-dom\": \"^18.3.1\",\r\n+\"react-hook-form\": \"^7.56.2\",\r\n     \"react-resizable-panels\": \"^3.0.1\",\r\n     \"react-router-dom\": \"^7.5.1\",\r\n     \"react-scripts\": \"5.0.1\",\r\n     \"recharts\": \"^3.6.0\",\r\n"
+                },
+                {
+                    "date": 1780241159870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,12 +41,12 @@\n     \"embla-carousel-react\": \"^8.6.0\",\r\n     \"input-otp\": \"^1.4.2\",\r\n     \"lucide-react\": \"^0.507.0\",\r\n     \"next-themes\": \"^0.4.6\",\r\n-\"react\": \"^18.3.1\",\r\n-\"react-day-picker\": \"8.10.1\",\r\n-\"react-dom\": \"^18.3.1\",\r\n-\"react-hook-form\": \"^7.56.2\",\r\n+    \"react\": \"^18.3.1\",\r\n+    \"react-day-picker\": \"8.10.1\",\r\n+    \"react-dom\": \"^18.3.1\",\r\n+    \"react-hook-form\": \"^7.56.2\",\r\n     \"react-resizable-panels\": \"^3.0.1\",\r\n     \"react-router-dom\": \"^7.5.1\",\r\n     \"react-scripts\": \"5.0.1\",\r\n     \"recharts\": \"^3.6.0\",\r\n"
+                },
+                {
+                    "date": 1780241207547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -76,9 +76,9 @@\n   \"devDependencies\": {\r\n     \"@babel/plugin-proposal-private-property-in-object\": \"^7.21.11\",\r\n     \"@craco/craco\": \"^7.1.0\",\r\n     \"@emergentbase/visual-edits\": \"https://assets.emergent.sh/npm/emergentbase-visual-edits-1.0.8.tgz\",\r\n-    \"@eslint/js\": \"9.23.0\",\r\n+    \"@eslint/js\": \"^8.57.0\",\r\n     \"autoprefixer\": \"^10.4.20\",\r\n \"eslint\": \"^8.57.0\",    \"eslint-plugin-import\": \"2.31.0\",\r\n     \"eslint-plugin-jsx-a11y\": \"6.10.2\",\r\n     \"eslint-plugin-react\": \"7.37.4\",\r\n"
                 }
             ],
             "date": 1780238809679,
