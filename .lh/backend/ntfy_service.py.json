@@ -1,0 +1,18 @@
+{
+    "sourceFile": "backend/ntfy_service.py",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1780231481892,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1780231481892,
+            "name": "Commit-0",
+            "content": "\"\"\"\r\nntfy.sh push notification service.\r\n\r\nCONFIG: The ntfy topic name is stored in MongoDB via the admin Settings tab\r\n(collection: settings, doc id: \"notifications\", field: \"ntfy_topic\").\r\nThis lets the academy admin change/rotate the topic anytime without redeploying.\r\n\r\nHOW IT WORKS:\r\n- ntfy.sh is a free public push service. We POST plain text to\r\n  https://ntfy.sh/<topic-name> and anyone subscribed to that topic via the\r\n  ntfy mobile app receives an instant push notification.\r\n- Pick a long, unguessable topic name (acts as a shared secret).\r\n- No API key, no account, no signup required.\r\n\r\nFire-and-forget: never raises. If the topic is empty or ntfy errors out,\r\nthe booking still succeeds — we only log.\r\n\"\"\"\r\n\r\nimport asyncio\r\nimport logging\r\nimport requests\r\n\r\nlogger = logging.getLogger(\"ntfy\")\r\n\r\nNTFY_BASE = \"https://ntfy.sh\"\r\nSEND_TIMEOUT_SECONDS = 8\r\n\r\n\r\ndef _build_message(booking: dict) -> str:\r\n    return (\r\n        f\"Name: {booking.get('full_name', '-')}\\n\"\r\n        f\"Phone: {booking.get('phone', '-')}\\n\"\r\n        f\"Ground: {booking.get('ground_name', '-')}\\n\"\r\n        f\"Date: {booking.get('date', '-')}\\n\"\r\n        f\"Slot: {booking.get('slot_label', '-')}\\n\"\r\n        f\"Status: {str(booking.get('status', 'pending')).capitalize()}\"\r\n    )\r\n\r\n\r\ndef _send_sync(topic: str, body: str, title: str):\r\n    resp = requests.post(\r\n        f\"{NTFY_BASE}/{topic}\",\r\n        data=body.encode(\"utf-8\"),\r\n        headers={\r\n            \"Title\": title,\r\n            \"Priority\": \"high\",\r\n            \"Tags\": \"cricket,bookmark\",\r\n        },\r\n        timeout=SEND_TIMEOUT_SECONDS,\r\n    )\r\n    if not resp.ok:\r\n        raise RuntimeError(f\"ntfy {resp.status_code}: {resp.text[:200]}\")\r\n\r\n\r\nasync def send_booking_push(booking: dict, topic) -> None:\r\n    \"\"\"Fire-and-forget push notification. Never raises.\"\"\"\r\n    if not topic or not str(topic).strip():\r\n        logger.info(\"ntfy topic empty — skipping push notification.\")\r\n        return\r\n    topic = str(topic).strip().lstrip(\"/\")\r\n    title = f\"New Booking · {booking.get('ground_name', 'Ground')}\"\r\n    body = _build_message(booking)\r\n    try:\r\n        await asyncio.to_thread(_send_sync, topic, body, title)\r\n        logger.info(\"ntfy push sent (topic=%s)\", topic)\r\n    except Exception as exc:\r\n        logger.warning(\"ntfy push failed: %s\", exc)"
+        }
+    ]
+}

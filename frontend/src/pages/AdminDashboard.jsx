@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { LogOut, LayoutDashboard, CalendarCheck, UserPlus, ClipboardCheck, FileText, Trash2, CheckCircle, XCircle, Plus } from "lucide-react";
-import { useAuth } from "../context/AuthContext";
+import { LogOut, LayoutDashboard, CalendarCheck, UserPlus, ClipboardCheck, FileText, Trash2, CheckCircle, XCircle, Plus, Settings as SettingsIcon, Bell } from "lucide-react";import { useAuth } from "../context/AuthContext";
 import { apiClient, formatApiError } from "../lib/api";
 
 const STATUS_BADGE = {
@@ -23,6 +22,7 @@ const TABS = [
     { id: "admissions", label: "Admissions", Icon: UserPlus },
     { id: "attendance", label: "Attendance", Icon: ClipboardCheck },
     { id: "blogs", label: "Blog Mgmt", Icon: FileText },
+    { id: "settings", label: "Settings", Icon: SettingsIcon },
 ];
 
 export default function AdminDashboard() {
@@ -87,6 +87,7 @@ export default function AdminDashboard() {
                 {tab === "admissions" && <Admissions />}
                 {tab === "attendance" && <Attendance />}
                 {tab === "blogs" && <Blogs />}
+                {tab === "settings" && <SettingsTab />}
             </main>
         </div>
     );
@@ -372,5 +373,103 @@ function In({ placeholder, v, on, type = "text", req, ...rest }) {
     return (
         <input {...rest} type={type} placeholder={placeholder} value={v} required={req} onChange={(e) => on(e.target.value)}
             className="bg-[#0B0B0B] border border-[#2A2A2A] rounded-sm p-3 font-poppins text-white focus:border-[#C7F041] outline-none" />
+    );
+}
+function SettingsTab() {
+    const [email, setEmail] = useState("");
+    const [topic, setTopic] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [saving, setSaving] = useState(false);
+
+    useEffect(() => {
+        setLoading(true);
+        apiClient.get("/admin/settings")
+            .then((r) => {
+                setEmail(r.data?.notify_email || "");
+                setTopic(r.data?.ntfy_topic || "");
+            })
+            .catch(() => {})
+            .finally(() => setLoading(false));
+    }, []);
+
+    const save = async (e) => {
+        e.preventDefault();
+        setSaving(true);
+        try {
+            await apiClient.post("/admin/settings", { notify_email: email, ntfy_topic: topic });
+            toast.success("Notification settings saved");
+        } catch (err) {
+            toast.error(formatApiError(err.response?.data?.detail) || "Save failed");
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    return (
+        <div>
+            <h1 className="font-bebas text-5xl mb-2 tracking-wide">Settings</h1>
+            <p className="font-poppins text-[#909090] mb-8">Configure where booking alerts get sent.</p>
+
+            <form onSubmit={save} className="space-y-6 max-w-2xl">
+                <div className="bg-[#141414] border border-[#2A2A2A] rounded-sm p-6 md:p-8">
+                    <div className="flex items-center gap-3 mb-5">
+                        <div className="w-10 h-10 rounded-sm border border-[#2A2A2A] flex items-center justify-center text-[#C7F041]">
+                            <Bell size={18} />
+                        </div>
+                        <div>
+                            <div className="font-bebas text-xl text-white tracking-wide">Email Notifications</div>
+                            <div className="font-poppins text-xs text-[#909090]">Booking alerts sent here via Resend.</div>
+                        </div>
+                    </div>
+                    <input
+                        data-testid="settings-email"
+                        type="text"
+                        placeholder={loading ? "Loading..." : "you@example.com (comma-separate for multiple)"}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        disabled={loading}
+                        className="w-full bg-[#0B0B0B] border border-[#2A2A2A] rounded-sm p-3 font-poppins text-white focus:border-[#C7F041] outline-none"
+                    />
+                    <p className="font-poppins text-xs text-[#777] mt-3">Leave empty to disable email notifications.</p>
+                </div>
+
+                <div className="bg-[#141414] border border-[#2A2A2A] rounded-sm p-6 md:p-8">
+                    <div className="flex items-center gap-3 mb-5">
+                        <div className="w-10 h-10 rounded-sm border border-[#2A2A2A] flex items-center justify-center text-[#C7F041]">
+                            <Bell size={18} />
+                        </div>
+                        <div>
+                            <div className="font-bebas text-xl text-white tracking-wide">Push Notifications (ntfy.sh)</div>
+                            <div className="font-poppins text-xs text-[#909090]">Instant phone push via the free ntfy app.</div>
+                        </div>
+                    </div>
+                    <input
+                        data-testid="settings-ntfy-topic"
+                        type="text"
+                        placeholder={loading ? "Loading..." : "your-secret-topic-name"}
+                        value={topic}
+                        onChange={(e) => setTopic(e.target.value)}
+                        disabled={loading}
+                        className="w-full bg-[#0B0B0B] border border-[#2A2A2A] rounded-sm p-3 font-poppins text-white focus:border-[#C7F041] outline-none"
+                    />
+                    <p className="font-poppins text-xs text-[#777] mt-3 leading-relaxed">
+                        Install <span className="text-[#C7F041]">ntfy</span> from App Store / Play Store →
+                        Add subscription → enter the same topic name → done.
+                        Leave empty to disable push notifications.
+                    </p>
+                </div>
+
+                <div className="flex gap-3">
+                    <button
+                        type="submit"
+                        disabled={saving || loading}
+                        data-testid="settings-save"
+                        className="bg-[#C7F041] text-black font-bebas py-3 px-8 uppercase tracking-wider rounded-sm hover:bg-[#A5C635] disabled:opacity-60"
+                    >
+                        {saving ? "Saving..." : "Save All Settings"}
+                    </button>
+                </div>
+            </form>
+        </div>
     );
 }

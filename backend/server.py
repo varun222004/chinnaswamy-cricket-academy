@@ -19,7 +19,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
 
 from telegram_service import send_booking_notification
-
+from email_service import send_booking_email
+from ntfy_service import send_booking_push
 
 # ---------------------------------------------------------------------------
 # Config / DB
@@ -170,6 +171,11 @@ class ContactIn(BaseModel):
     message: str
 
 
+class SettingsIn(BaseModel):
+    notify_email: str = ""  # comma-separated list allowed; empty disables email notifications
+    ntfy_topic: str = ""    # ntfy.sh topic name; empty disables push notifications
+
+
 # ---------------------------------------------------------------------------
 # Auth Routes
 # ---------------------------------------------------------------------------
@@ -247,8 +253,11 @@ async def create_booking(body: BookingIn):
     }
     await db.bookings.insert_one(doc)
     doc.pop("_id", None)
-    # Fire-and-forget admin Telegram notification (never blocks / breaks booking).
+    # Fire-and-forget admin notifications (never block / break booking).
     asyncio.create_task(send_booking_notification(doc))
+    settings_doc = await db.settings.find_one({"id": "notifications"}, {"_id": 0}) or {}
+    asyncio.create_task(send_booking_email(doc, settings_doc.get("notify_email")))
+    asyncio.create_task(send_booking_push(doc, settings_doc.get("ntfy_topic")))
     return doc
 
 
@@ -380,6 +389,30 @@ async def submit_contact(body: ContactIn):
     await db.contact_messages.insert_one(doc)
     doc.pop("_id", None)
     return {"ok": True}
+
+
+# ---------------------------------------------------------------------------
+# Admin: Settings (notification recipient email, stored in DB)
+# ---------------------------------------------------------------------------
+@api.get("/admin/settings")
+async def get_settings(user: dict = Depends(get_current_user)):
+    doc = await db.settings.find_one({"id": "notifications"}, {"_id": 0})
+    return doc or {"id": "notifications", "notify_email": ""}
+
+
+@api.post("/admin/settings")
+async def save_settings(body: SettingsIn, user: dict = Depends(get_current_user)):
+    await db.settings.update_one(
+        {"id": "notifications"},
+        {"$set": {
+            "id": "notifications",
+            "notify_email": body.notify_email.strip(),
+            "ntfy_topic": body.ntfy_topic.strip(),
+            "updated_at": now_iso(),
+        }},
+        upsert=True,
+    )
+    return {"ok": True, "notify_email": body.notify_email.strip(), "ntfy_topic": body.ntfy_topic.strip()}
 
 
 # ---------------------------------------------------------------------------
