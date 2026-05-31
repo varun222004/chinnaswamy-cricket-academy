@@ -9,8 +9,8 @@ import requests
 BASE_URL = os.environ.get("REACT_APP_BACKEND_URL", "https://chinnaswamy-sports.preview.emergentagent.com").rstrip("/")
 API = f"{BASE_URL}/api"
 
-ADMIN_EMAIL = "admin@academy.com"
-ADMIN_PASSWORD = "admin123"
+ADMIN_EMAIL = os.environ.get("ADMIN_EMAIL", "admin@academy.com")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "admin123")
 
 FUTURE_DATE = (date.today() + timedelta(days=30)).isoformat()
 UNIQUE_SUFFIX = uuid.uuid4().hex[:6]
@@ -122,7 +122,7 @@ def test_booking_blocks_slot(anon_session, created_booking):
     r = anon_session.get(f"{API}/slots", params={"ground_id": "ground-2", "date": bdate})
     assert r.status_code == 200
     slots = {s["id"]: s["available"] for s in r.json()}
-    assert slots["morning"] is False
+    assert slots["morning"] == False  # noqa: E712
 
 
 def test_double_booking_returns_409(anon_session, created_booking):
@@ -236,7 +236,7 @@ def test_contact_public(anon_session):
         "message": "Hello from tests",
     })
     assert r.status_code == 200
-    assert r.json()["ok"] is True
+    assert r.json()["ok"] == True  # noqa: E712
 
 
 # ---------------- Stats ----------------

@@ -6,6 +6,15 @@ import Home from "./pages/Home";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 
+const TOAST_OPTIONS = {
+    style: {
+        background: "#141414",
+        border: "1px solid #2A2A2A",
+        color: "#fff",
+        fontFamily: "Poppins, sans-serif",
+    },
+};
+
 function App() {
     return (
         <AuthProvider>
@@ -16,18 +25,7 @@ function App() {
                     <Route path="/admin" element={<AdminDashboard />} />
                 </Routes>
             </BrowserRouter>
-            <Toaster
-                position="top-right"
-                theme="dark"
-                toastOptions={{
-                    style: {
-                        background: "#141414",
-                        border: "1px solid #2A2A2A",
-                        color: "#fff",
-                        fontFamily: "Poppins, sans-serif",
-                    },
-                }}
-            />
+            <Toaster position="top-right" theme="dark" toastOptions={TOAST_OPTIONS} />
         </AuthProvider>
     );
 }

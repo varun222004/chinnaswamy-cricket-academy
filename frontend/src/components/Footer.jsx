@@ -47,9 +47,9 @@ export default function Footer() {
                 <div>
                     <div className="font-bebas text-white text-xl tracking-wide">Follow</div>
                     <div className="mt-4 flex gap-3">
-                        {[Instagram, Facebook, Twitter, Youtube].map((Icon, i) => (
+                        {[Instagram, Facebook, Twitter, Youtube].map((Icon) => (
                             <a
-                                key={i}
+                                key={Icon.displayName || Icon.name}
                                 href="#"
                                 className="w-10 h-10 rounded-sm border border-[#2A2A2A] flex items-center justify-center text-[#D1D1D1] hover:text-[#C7F041] hover:border-[#C7F041] transition-colors"
                             >

@@ -4,6 +4,12 @@ import { toast } from "sonner";
 import { apiClient, formatApiError } from "../lib/api";
 import { GROUNDS_LIST } from "../lib/data";
 
+function slotButtonClass(slot, selectedId) {
+    if (!slot.available) return "border-[#1d1d1d] bg-[#0e0e0e] opacity-50 cursor-not-allowed";
+    if (selectedId === slot.id) return "border-[#C7F041] bg-[#C7F041]/5";
+    return "border-[#2A2A2A] bg-[#141414] hover:border-[#444]";
+}
+
 export default function BookingModal({ open, onClose, initialGround }) {
     const [step, setStep] = useState(1); // 1 select, 2 form
     const [groundId, setGroundId] = useState(initialGround || "ground-1");
@@ -131,13 +137,7 @@ export default function BookingModal({ open, onClose, initialGround }) {
                                             data-testid={`select-slot-${s.id}`}
                                             disabled={!s.available}
                                             onClick={() => setSlotId(s.id)}
-                                            className={`text-left p-4 rounded-sm border transition-all ${
-                                                !s.available
-                                                    ? "border-[#1d1d1d] bg-[#0e0e0e] opacity-50 cursor-not-allowed"
-                                                    : slotId === s.id
-                                                    ? "border-[#C7F041] bg-[#C7F041]/5"
-                                                    : "border-[#2A2A2A] bg-[#141414] hover:border-[#444]"
-                                            }`}
+                                            className={`text-left p-4 rounded-sm border transition-all ${slotButtonClass(s, slotId)}`}
                                         >
                                             <div className="font-bebas text-white text-lg">{s.label}</div>
                                             <div className="font-bebas text-[#C7F041] text-2xl mt-1">

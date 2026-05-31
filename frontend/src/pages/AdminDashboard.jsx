@@ -1,9 +1,21 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { LogOut, LayoutDashboard, CalendarCheck, UserPlus, ClipboardCheck, FileText, Trash2, CheckCircle, XCircle, Plus } from "lucide-react";
 import { useAuth } from "../context/AuthContext";
 import { apiClient, formatApiError } from "../lib/api";
+
+const STATUS_BADGE = {
+    approved: "bg-[#C7F041]/20 text-[#C7F041]",
+    rejected: "bg-red-500/20 text-red-400",
+    pending: "bg-yellow-500/20 text-yellow-400",
+};
+
+function attendanceButtonClass(active, kind) {
+    if (!active) return "border-[#2A2A2A] text-[#909090] hover:text-white";
+    if (kind === "present") return "border-[#C7F041] text-[#C7F041] bg-[#C7F041]/10";
+    return "border-red-500 text-red-400 bg-red-500/10";
+}
 
 const TABS = [
     { id: "overview", label: "Overview", Icon: LayoutDashboard },
@@ -146,11 +158,7 @@ function Bookings() {
                                 <td className="px-4 py-3 text-[#D1D1D1]">{b.date}</td>
                                 <td className="px-4 py-3 text-[#D1D1D1]">{b.slot_label}</td>
                                 <td className="px-4 py-3">
-                                    <span className={`px-2 py-1 rounded-sm text-xs uppercase tracking-widest font-bebas ${
-                                        b.status === "approved" ? "bg-[#C7F041]/20 text-[#C7F041]" :
-                                        b.status === "rejected" ? "bg-red-500/20 text-red-400" :
-                                        "bg-yellow-500/20 text-yellow-400"
-                                    }`}>{b.status}</span>
+                                    <span className={`px-2 py-1 rounded-sm text-xs uppercase tracking-widest font-bebas ${STATUS_BADGE[b.status] || STATUS_BADGE.pending}`}>{b.status}</span>
                                 </td>
                                 <td className="px-4 py-3 flex gap-2 justify-end">
                                     <button data-testid={`approve-${b.id}`} onClick={() => update(b.id, "approved")} className="p-2 rounded-sm border border-[#2A2A2A] hover:border-[#C7F041] hover:text-[#C7F041]"><CheckCircle size={14} /></button>
@@ -169,8 +177,8 @@ function Bookings() {
 function Admissions() {
     const [items, setItems] = useState([]);
     const [form, setForm] = useState({ student_name: "", parent_name: "", phone: "", age: 12, batch: "morning", joining_date: new Date().toISOString().slice(0, 10) });
-    const load = () => apiClient.get("/admin/admissions").then((r) => setItems(r.data)).catch(() => {});
-    useEffect(() => { load(); }, []);
+    const load = useCallback(() => apiClient.get("/admin/admissions").then((r) => setItems(r.data)).catch(() => {}), []);
+    useEffect(() => { load(); }, [load]);
 
     const add = async (e) => {
         e.preventDefault();
@@ -282,11 +290,7 @@ function Attendance() {
                                     key={st}
                                     data-testid={`att-${st}-${s.id}`}
                                     onClick={() => setRecords({ ...records, [s.id]: st })}
-                                    className={`px-3 py-1.5 rounded-sm text-xs uppercase tracking-widest font-bebas border transition-colors ${
-                                        records[s.id] === st
-                                            ? st === "present" ? "border-[#C7F041] text-[#C7F041] bg-[#C7F041]/10" : "border-red-500 text-red-400 bg-red-500/10"
-                                            : "border-[#2A2A2A] text-[#909090] hover:text-white"
-                                    }`}
+                                    className={`px-3 py-1.5 rounded-sm text-xs uppercase tracking-widest font-bebas border transition-colors ${attendanceButtonClass(records[s.id] === st, st)}`}
                                 >{st}</button>
                             ))}
                         </div>
@@ -301,8 +305,8 @@ function Blogs() {
     const [items, setItems] = useState([]);
     const [form, setForm] = useState({ title: "", excerpt: "", content: "", image_url: "", author: "Academy Team" });
     const [editId, setEditId] = useState(null);
-    const load = () => apiClient.get("/blogs").then((r) => setItems(r.data)).catch(() => {});
-    useEffect(() => { load(); }, []);
+    const load = useCallback(() => apiClient.get("/blogs").then((r) => setItems(r.data)).catch(() => {}), []);
+    useEffect(() => { load(); }, [load]);
 
     const submit = async (e) => {
         e.preventDefault();
