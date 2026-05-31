@@ -6,6 +6,7 @@ load_dotenv(ROOT_DIR / ".env")
 
 import os
 import uuid
+import asyncio
 import logging
 import bcrypt
 import jwt
@@ -16,6 +17,8 @@ from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depend
 from starlette.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel, Field, EmailStr, ConfigDict
+
+from telegram_service import send_booking_notification
 
 
 # ---------------------------------------------------------------------------
@@ -244,6 +247,8 @@ async def create_booking(body: BookingIn):
     }
     await db.bookings.insert_one(doc)
     doc.pop("_id", None)
+    # Fire-and-forget admin Telegram notification (never blocks / breaks booking).
+    asyncio.create_task(send_booking_notification(doc))
     return doc
 
 
