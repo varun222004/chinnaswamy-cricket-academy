@@ -70,10 +70,10 @@ def set_auth_cookies(response: Response, user_id: str, email: str):
     refresh = create_token(
         {"sub": user_id, "type": "refresh"}, timedelta(days=REFRESH_TOKEN_DAYS)
     )
-    response.set_cookie("access_token", access, httponly=True, secure=False,
-                        samesite="lax", max_age=ACCESS_TOKEN_MINUTES * 60, path="/")
-    response.set_cookie("refresh_token", refresh, httponly=True, secure=False,
-                        samesite="lax", max_age=REFRESH_TOKEN_DAYS * 86400, path="/")
+    response.set_cookie("access_token", access, httponly=True, secure=True,
+                        samesite="none", max_age=ACCESS_TOKEN_MINUTES * 60, path="/")
+    response.set_cookie("refresh_token", refresh, httponly=True, secure=True,
+                        samesite="none", max_age=REFRESH_TOKEN_DAYS * 86400, path="/")
     return access
 
 
